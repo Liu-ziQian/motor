@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
     QDoubleSpinBox, QComboBox
 )
 from PyQt6.QtCore import Qt, QLocale
-from PyQt6.QtGui import QDoubleValidator, QFont, QTextCursor
+from PyQt6.QtGui import QDoubleValidator, QFont, QTextCursor, QPixmap
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -289,7 +289,6 @@ class UnifiedMotorAnalysisApp(QMainWindow):
             self.batch_params_table.setHorizontalHeaderLabels(["序号", "输入电压(V)", "输入功率(W)"])
    
             default_voltages = [
-                (10.0, 9.0),
                 (10.5, 11.0),
                 (11.0, 12.0),
                 (11.5, 12.0),
@@ -391,7 +390,7 @@ class UnifiedMotorAnalysisApp(QMainWindow):
             for r_load, power in params:
                 resistance_power_levels.append({'r_load': r_load, 'power_input': power})
             self.batch_config.configure_resistance_exploration(resistance_power_levels, drive_v_fixed=12.0)
-        else:  # 磁场距离影响
+        else:  
        
             distance_power_pairs = []
             for distance, power in params:
@@ -585,7 +584,7 @@ class UnifiedMotorAnalysisApp(QMainWindow):
                 col_labels[1] = "输入电压(V)"
             elif self.batch_config.exploration_type == 'resistance':
                 col_labels[1] = "负载电阻(Ω)"
-            else: # magnetic_distance
+            else: 
                 col_labels[1] = "磁场距离(mm)"
             self.batch_results_table.setHorizontalHeaderLabels(col_labels)
         else:
@@ -1307,6 +1306,7 @@ class PrincipleDialog(QDialog):
         
         <h3>系统核心设计</h3>
         <p>本系统基于双电机配置，包含一台驱动电机和一台由其带动的发电机（同型号）。可调直流电源为驱动电机供电，驱动电机将电能转化为机械能，再通过联轴器传递给发电机。发电机将接收到的机械能转化为电能输出至负载（如滑动变阻器）。</p>
+        <p><img src=\"fig1.png\" width=\"600\" /></p>
         <p>关键数据采集点包括：</p>
         <ul>
             <li><strong>驱动电机输入：</strong>通过电流传感器测量驱动电机的输入电流，结合已知的驱动电压，用于计算输入功率。</li>
